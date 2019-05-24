@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-nav>
+        <ion-title>
+            {{ Title }}
+        </ion-title>
+        <ion-button end>
+            <button ion-button icon-only (click)="addEvent()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-button>
+    </ion-nav>
+</ion-header>
+
+<ion-content>
+    <calendar [eventSource]="eventSource"
+        [calendarMode]="calendar.mode"
+        [currentDate]="calendar.currentDate"
+        (onEventSelected)="onEventSelected($event)"
+        (onTitleChanged)="onViewTitleChanged($event)"
+        (onTimeSelected)="onTimeSelected($event)"
+        step="30"
+        class="calendar">
+    </calendar>
+</ion-content>

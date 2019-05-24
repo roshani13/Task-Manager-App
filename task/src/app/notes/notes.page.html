@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Notes</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+  <!--form [formGroup]="new_item_form" (submit)="createItem(new_item_form.value)"-->
+    <ion-item>
+     
+        <ion-textarea type="text" placeholder="Title" required></ion-textarea>
+    </ion-item>
+    
+    <ion-item>
+        <ion-textarea type="text" placeholder="Description..." required></ion-textarea>
+    </ion-item>
+   
+    <ion-button class="submit-btn" expand="block" type="submit" routerLink='/home'>Create</ion-button>
+  </form>
+</ion-content>
