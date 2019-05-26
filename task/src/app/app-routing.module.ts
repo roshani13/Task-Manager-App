@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'notes', loadChildren: './notes/notes.module#NotesPageModule' },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'reminder', loadChildren: './reminder/reminder.module#ReminderPageModule' },
-  { path: 'assigntask', loadChildren: './assigntask/assigntask.module#AssigntaskPageModule' },
+  // { path: 'assigntask', loadChildren: './assigntask/assigntask.module#AssigntaskPageModule' },
   { path: 'event-modal', loadChildren: './event-modal/event-modal.module#EventModalPageModule' },
 ];
 
