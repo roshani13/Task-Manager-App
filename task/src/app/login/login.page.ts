@@ -1,26 +1,67 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { NavController } from '@ionic/angular';
+import { AuthenticateService } from '../services/authentication.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
-
-  constructor(public alertController: AlertController) {}
-
-  async shoeAlert() {
-    const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Subtitle',
-      message: 'This is an alert message.',
-      buttons: ['OK']
+export class LoginPage implements OnInit {
+ 
+  validations_form: FormGroup;
+  errorMessage: string = '';
+ 
+  constructor(
+ 
+    private navCtrl: NavController,
+    private authService: AuthenticateService,
+    private formBuilder: FormBuilder
+ 
+  ) { }
+ 
+  ngOnInit() {
+ 
+    this.validations_form = this.formBuilder.group({
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])),
+      password: new FormControl('', Validators.compose([
+        Validators.minLength(5),
+        Validators.required
+      ])),
     });
-
-    await alert.present();
-  } 
-
+  }
+ 
+ 
+  validation_messages = {
+    'email': [
+      { type: 'required', message: 'Email is required.' },
+      { type: 'pattern', message: 'Please enter a valid email.' }
+    ],
+    'password': [
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message: 'Password must be at least 5 characters long.' }
+    ]
+  };
+ 
+ 
+  loginUser(value){
+    this.authService.loginUser(value)
+    .then(res => {
+      console.log(res);
+      this.errorMessage = "";
+      this.navCtrl.navigateForward('/home');
+    }, err => {
+      this.errorMessage = err.message;
+    })
+  }
+ 
+  goToRegisterPage(){
+    this.navCtrl.navigateForward('/register');
+  }
+ 
 }
-
-
