@@ -13,11 +13,13 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { environment } from 'src/environments/environment';
 import { AuthenticateService } from './services/authentication.service';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { ReactiveFormsModule,FormsModule} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'
+
 import * as firebase from 'firebase/app';
- 
+
 firebase.initializeApp(environment.firebase);
- 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -27,7 +29,8 @@ firebase.initializeApp(environment.firebase);
     AppRoutingModule,
     AngularFireAuthModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     StatusBar,
@@ -39,4 +42,4 @@ firebase.initializeApp(environment.firebase);
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
