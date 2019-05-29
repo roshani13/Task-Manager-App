@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { AuthenticateService } from '../services/authentication.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -12,13 +13,16 @@ export class HomePage implements OnInit {
  
   constructor(
     private navCtrl: NavController,
-    private authService: AuthenticateService
+    private authService: AuthenticateService,
+    private storage: Storage
   ) {}
  
   ngOnInit(){
     
     if(this.authService.userDetails()){
       this.userEmail = this.authService.userDetails().email;
+      console.log(this.userEmail)
+      this.storage.set("user", this.userEmail)
     }else{
       this.navCtrl.navigateBack('');
     }

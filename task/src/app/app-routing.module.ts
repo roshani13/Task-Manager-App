@@ -4,10 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
 
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-    {path: 'home',loadChildren: './home/home.module#HomePageModule'
-  },
-  
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'notes', loadChildren: './notes/notes.module#NotesPageModule' },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
@@ -24,4 +22,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

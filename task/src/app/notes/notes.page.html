@@ -8,17 +8,15 @@
 </ion-header>
 
 <ion-content padding>
-  <form>
-  <!--form [formGroup]="new_item_form" (submit)="createItem(new_item_form.value)"-->
+  <form (ngSubmit)="add_note()">
     <ion-item>
-     
-        <ion-textarea type="text" placeholder="Title" required></ion-textarea>
+      <ion-label position="floating" color="primary">Title</ion-label>
+      <ion-input type="text" [(ngModel)]="note.title" name="title"></ion-input>
     </ion-item>
-    
     <ion-item>
-        <ion-textarea type="text" placeholder="Description..." required></ion-textarea>
+        <ion-label position="floating" color="primary">Description</ion-label>
+        <ion-textarea [(ngModel)]="note.description" name="description"></ion-textarea>
     </ion-item>
-   
-    <ion-button class="submit-btn" expand="block" type="submit" routerLink='/home'>Create</ion-button>
+    <ion-button class="submit-btn" expand="block" type="submit">Created </ion-button>
   </form>
 </ion-content>
