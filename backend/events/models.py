@@ -5,7 +5,7 @@ from datetime import datetime
 
 class UserInfo(models.Model):
     '''class for user login '''
-    user_name = models.CharField(max_length=100)
+    user_name = models.CharField(max_length=100, null=False, primary_key=True)
     password = models.CharField(max_length=100)
 
 # class EventDetails(models.Model):

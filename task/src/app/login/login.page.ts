@@ -30,10 +30,9 @@ export class LoginPage implements OnInit {
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
-        // Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
       password: new FormControl('', Validators.compose([
-        // Validators.minLength(5),
         Validators.required
       ])),
     });
@@ -47,7 +46,6 @@ export class LoginPage implements OnInit {
     ],
     'password': [
       { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long.' }
     ]
   };
 
@@ -58,10 +56,12 @@ export class LoginPage implements OnInit {
       .then(res => {
         console.log(res);
         this.errorMessage = "";
-
         this.http.post('http://127.0.0.1:8001/events/login_user'
           , value,
-          { observe: 'response' }
+          {
+            observe: 'response',
+            responseType: 'text'
+          }
         ).subscribe(res => {
           console.log("response", res)
           if (res.status == 200) {
@@ -70,7 +70,13 @@ export class LoginPage implements OnInit {
           }
           else {
             console.log("Failure")
+            this.errorMessage = "Unable To Login"
           }
+        }, error => {
+          if (error.error == "")
+            this.errorMessage = "Unable To Login"
+          else
+            this.errorMessage = error.error
         })
 
       }, err => {
