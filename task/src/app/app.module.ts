@@ -17,6 +17,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { IonicStorageModule } from '@ionic/storage';
 import * as firebase from 'firebase/app';
+import { HttpModule } from '@angular/http';
+
 
 firebase.initializeApp(environment.firebase);
 
@@ -31,7 +33,9 @@ firebase.initializeApp(environment.firebase);
     AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpModule,
     HttpClientModule
+ 
   ],
   providers: [
     StatusBar,
@@ -41,6 +45,6 @@ firebase.initializeApp(environment.firebase);
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

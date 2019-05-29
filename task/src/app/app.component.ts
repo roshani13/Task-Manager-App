@@ -27,7 +27,7 @@ export class AppComponent {
     },
     {
       title: 'assigntask',
-      url: '/assigntask',
+      url: '/add',
       icon: 'ios-man'
     }
   ];

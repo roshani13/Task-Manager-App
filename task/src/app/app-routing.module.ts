@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'reminder', loadChildren: './reminder/reminder.module#ReminderPageModule' },
   // { path: 'assigntask', loadChildren: './assigntask/assigntask.module#AssigntaskPageModule' },
   { path: 'event-modal', loadChildren: './event-modal/event-modal.module#EventModalPageModule' },
+  { path: 'add', loadChildren: './add/add.module#AddPageModule' },
 ];
 
 @NgModule({
