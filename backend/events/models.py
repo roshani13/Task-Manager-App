@@ -8,19 +8,26 @@ class UserInfo(models.Model):
     user_name = models.CharField(max_length=100, null=False, primary_key=True)
     password = models.CharField(max_length=100)
 
-# class EventDetails(models.Model):
-#     '''docstring for Event'''
-#     id = models.AutoField(primary_key=True)
-#     event_type = models.CharField(max_length=100, null=False)
-#     event_name = models.CharField(max_length=100, null=False)
-#     description = models.CharField(max_length=800)
-#     date_time = models.DateTimeField(default=datetime.now, null=False)
-#     location = models.CharField(max_length=100, null=False)
-#     capacity = models.IntegerField(default=10)
-#     fees = models.IntegerField(default=1)
+class ReminderDetails(models.Model):
+    '''doc string for reminder'''
+    id = models.AutoField(primary_key=True)
+    reminder_name = models.CharField(max_length=50, null=False)
+    description = models.CharField(max_length=800)
+    date_time = models.DateTimeField(default=datetime.now, null=False)
+    
+class CreatedReminders(models.Model):
+    '''class to identify reminders created by users'''
+    user_name = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+    reminder_id = models.OneToOneField(ReminderDetails, on_delete=models.CASCADE, primary_key=True)
 
 
-# class CreatedEvents(models.Model):
-#     '''class to identofy events created by users'''
-#     user_name = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
-#     event_id = models.OneToOneField(EventDetails, on_delete=models.CASCADE, primary_key=True)
+class Notes(models.Model):
+    '''doc string for notes'''
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=50, null=False)
+    description = models.CharField(max_length=800)
+    
+class CreatedNotes(models.Model):
+    '''class to identify notess created by users'''
+    user_name = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+    notes_id = models.OneToOneField(Notes, on_delete=models.CASCADE, primary_key=True)
