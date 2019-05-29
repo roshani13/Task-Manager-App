@@ -15,7 +15,11 @@ import { AuthenticateService } from './services/authentication.service';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ReactiveFormsModule,FormsModule} from '@angular/forms';
 import * as firebase from 'firebase/app';
- 
+import { AppPage } from 'e2e/src/app.po';
+import { HttpModule } from '@angular/http';
+import {   HttpClientModule } from '@angular/common/http';
+
+
 firebase.initializeApp(environment.firebase);
  
 @NgModule({
@@ -27,7 +31,10 @@ firebase.initializeApp(environment.firebase);
     AppRoutingModule,
     AngularFireAuthModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule,
+    HttpClientModule
+ 
   ],
   providers: [
     StatusBar,
@@ -37,6 +44,6 @@ firebase.initializeApp(environment.firebase);
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
