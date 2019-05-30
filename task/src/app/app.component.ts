@@ -25,11 +25,11 @@ export class AppComponent {
       url: '/reminder',
       icon: 'alarm'
     },
-    {
-      title: 'assigntask',
-      url: '/add',
-      icon: 'ios-man'
-    }
+    // {
+    //   title: 'assigntask',
+    //   url: '/add',
+    //   icon: 'ios-man'
+    // }
   ];
 
   constructor(

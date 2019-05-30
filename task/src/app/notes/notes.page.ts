@@ -34,6 +34,8 @@ export class NotesPage implements OnInit {
         console.log("response", res)
         if (res.status == 201) {
           console.log("note added")
+          this.navCtrl.navigateForward('/home');
+
         }
         else {
           console.log("Failure")

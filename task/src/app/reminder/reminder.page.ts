@@ -43,6 +43,8 @@ export class ReminderPage {
         console.log("response", res)
         if (res.status == 201) {
           console.log("reminder added")
+          this.navCtrl.navigateForward('/home');
+
         }
         else {
           console.log("Failure")

@@ -12,6 +12,9 @@ import { Body } from '@angular/http/src/body';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  public notes = []
+  public reminders = []
+
   userEmail: string;
   constructor(
     private navCtrl: NavController,
@@ -37,6 +40,10 @@ export class HomePage implements OnInit {
       }
     ).subscribe(res => {
       console.log("response", res)
+      if (res){
+        this.notes = res['notes']
+        this.reminders = res['reminders']
+      }
       // if (res.status == 201) {
       //   console.log("reminder added")
       // }

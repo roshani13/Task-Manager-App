@@ -8,20 +8,58 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
-        <ion-icon slot="icon-only" name="log-out" ></ion-icon>
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
- 
+
 <ion-content padding>
- 
+
   <ion-grid>
     <ion-row>
       <ion-col text-center>
         Your Registered EmailID : {{userEmail}}
       </ion-col>
     </ion-row>
-  </ion-grid>  
-</ion-content>
+  </ion-grid>
 
+  <div>
+    <h4>Notes</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of notes">
+          <td> {{entry.title}} </td>
+          <td> {{entry.description }} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h4>Reminders</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>description</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of reminders">
+          <td> {{entry.title}} </td>
+          <td> {{entry.description }} </td>
+          <td> {{entry.date}} </td>
+          <td> {{entry.time}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ion-content>
