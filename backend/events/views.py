@@ -112,8 +112,12 @@ def add_reminder(request):
         return HttpResponse(status='404')
 
 
-def get_dashboard_details(request, user):
+def get_dashboard_details(request, user="" ):
     if request.method == "GET":
+        print(request.GET['zzz'])
+        print("user", user)
+        return HttpResponse(status='200')
+
         reminders = get_user_created_reminders(user)
         notes = get_user_created_notes(user)
         response = dict()
