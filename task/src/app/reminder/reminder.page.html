@@ -1,34 +1,36 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Set Reminder   </ion-title>
+    <ion-title>Set Reminder </ion-title>
     <ion-buttons slot="start">
-        <ion-button slot="end" routerLink="/home">
-          <ion-icon name="home"></ion-icon>
-        </ion-button>
-        </ion-buttons>
+      <ion-button slot="end" routerLink="/home">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-  
-  <ion-content padding>
-    <form (ngSubmit)="submit()">
-      <ion-list>
-        <ion-item>
-          <ion-input   type="text" [(ngModel)]="data.title" placeholder="title"  name="title"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-textarea type="text" [(ngModel)]="data.description" placeholder="description" name="description"></ion-textarea>
-        </ion-item>
-        <ion-item>
-          <ion-datetime displayFormat="DD/MM/YY" pickerFormat="D MMMM YYYY" [(ngModel)]="data.date" placeholder="date" name="date"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="data.time" placeholder="time" name="time"></ion-datetime>
-        </ion-item>
-      </ion-list>
-      <div padding>
-        <ion-button class="submit-btn" expand="block" type="submit">Add Notification</ion-button><br>
-       
-      </div>
-    </form>
-  </ion-content>
-  
+
+<ion-content padding>
+
+  <form (ngSubmit)="add_reminder()">
+    
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="data.title" placeholder="title" name="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea type="text" [(ngModel)]="data.description" placeholder="description" name="description">
+        </ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-datetime displayFormat="DD/MM/YY" pickerFormat="YYYY-MM-DD" [(ngModel)]="data.date" placeholder="date"
+          name="date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="data.time" placeholder="time" name="time">
+        </ion-datetime>
+      </ion-item>
+    <div padding>
+      <ion-button class="submit-btn" expand="block" type="submit">Add Reminder</ion-button><br>
+
+    </div>
+  </form>
+</ion-content>

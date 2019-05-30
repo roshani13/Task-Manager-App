@@ -1,8 +1,7 @@
 from django.http import HttpResponse
-import json
 from events.models import UserInfo, ReminderDetails, Notes, CreatedNotes, CreatedReminders
 from django.db.models.query import QuerySet
-
+import datetime, pytz, json
 
 def login_user(request):
     if request.method == "POST":
@@ -77,10 +76,22 @@ def add_reminder(request):
     '''create a reminder'''
     if request.method == "POST":
         data = json.loads(request.body.decode('utf-8'))
+        request_data = dict()
+        request_data['date_time'] = data["date"]
+        event_time = data["time"].split('.')[0]
+        event_date = request_data['date_time'] + " " + event_time
+
+        date_format = '%Y-%m-%d %H:%M:%S'
+
+        unaware_start_date = datetime.datetime.strptime(
+            event_date, date_format)
+        request_data['date_time'] = pytz.utc.localize(unaware_start_date)
+
         try:
             reminder = ReminderDetails()
             reminder.title = data['title']
             reminder.description = data['description']
+            reminder.date_time = request_data['date_time']
             reminder.save()
             reminder_id = reminder.id
         except Exception as e:

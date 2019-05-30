@@ -1,28 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticateService } from '../services/authentication.service';
 import { NavController } from '@ionic/angular';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
-import { storage } from 'firebase';
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.page.html',
   styleUrls: ['./notes.page.scss'],
 })
 export class NotesPage implements OnInit {
-  userEmail: string;
 
-  constructor(private navCtrl: NavController,
+  constructor(
+    private navCtrl: NavController,
     private http: HttpClient,
-    private storage: Storage,
-    private authService: AuthenticateService) { }
+    private storage: Storage) { }
   note = {}
   ngOnInit() { }
 
 
   add_note() {
     this.storage.get("user").then((val) => {
+      if (val == null)
+          val = 'admin@xyz.com';
       this.note['user'] = val
+      console.log(this.note['user'])
+
       this.http.post('http://127.0.0.1:8001/events/add_note'
         , this.note,
         {
@@ -46,6 +47,8 @@ export class NotesPage implements OnInit {
           console.log("err", error.error)
         // this.errorMessage = error.error
       })
+
+
     });
   }
 }

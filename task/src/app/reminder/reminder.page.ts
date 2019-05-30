@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, Platform, AlertController } from '@ionic/angular';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { HttpClient } from '@angular/common/http';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -10,38 +12,52 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 })
 export class ReminderPage {
 
-  data = { title:'', description:'', date:'', time:'' };
-
+  data = { title: '', description: '', date: '', time: '' };
 
   constructor(public navCtrl: NavController,
     public localNotifications: LocalNotifications,
     public platform: Platform,
+    private http: HttpClient,
+    private storage: Storage,
     public alertCtrl: AlertController) { }
 
-    async submit() {
-      console.log(this.data);
-      var date = new Date(this.data.date+" "+this.data.time);
-      console.log(date);
-      this.localNotifications.schedule({
-         text: 'Delayed ILocalNotification',
-         trigger: {at:new Date(new Date())},
-         led: 'FF0000',
-         sound: this.setSound(),
-      });
-      let alert = await this.alertCtrl.create({
-        message: 'Congratulation...!',
-        subHeader:'Notification setup successfully at '+date,
-        buttons: ['OK']
-      });
-      alert.present();
-      this.data = { title:'', description:'', date:'', time:'' };
-    }
-    setSound() {
-      if (this.platform.is('android')) {
-        return 'file://assets/sounds/Rooster.mp3'
-      } else {
-        return 'file://assets/sounds/Rooster.caf'
-      }
-    }
+  async add_reminder() {
+    this.data.date = this.data.date.split('T')[0]
+    this.data.time = this.data.time.split('T')[1]
 
+    console.log(this.data);
+
+    this.storage.get("user").then((val) => {
+      if (val == null)
+          val = 'admin@xyz.com';
+      this.data['user'] = val
+      console.log(this.data['user'])
+
+      this.http.post('http://127.0.0.1:8001/events/add_reminder'
+        , this.data,
+        {
+          observe: 'response',
+          responseType: 'text'
+        }
+      ).subscribe(res => {
+        console.log("response", res)
+        if (res.status == 201) {
+          console.log("reminder added")
+        }
+        else {
+          console.log("Failure")
+          // this.errorMessage = "Unable To Login"
+        }
+      }, error => {
+        if (error.error == "")
+          console.log("Unable to add reminder")
+        // this.errorMessage = "Unable To Login"
+        else
+          console.log("err", error.error)
+        // this.errorMessage = error.error
+      })
+
+
+    });
+  }
 }

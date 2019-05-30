@@ -2,9 +2,9 @@
   <ion-toolbar color="primary">
     <ion-title>Notes</ion-title>
     <ion-buttons slot="start">
-        <ion-button slot="end" routerLink="/home">
-          <ion-icon name="home"></ion-icon>
-        </ion-button>
+      <ion-button slot="end" routerLink="/home">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,9 +16,9 @@
       <ion-input type="text" [(ngModel)]="note.title" name="title"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label position="floating" color="primary">Description</ion-label>
-        <ion-textarea [(ngModel)]="note.description" name="description"></ion-textarea>
+      <ion-label position="floating" color="primary">Description</ion-label>
+      <ion-textarea [(ngModel)]="note.description" name="description"></ion-textarea>
     </ion-item>
-    <ion-button class="submit-btn" expand="block" type="submit">Created </ion-button>
+    <ion-button class="submit-btn" expand="block" type="submit">Create Notes</ion-button>
   </form>
 </ion-content>
