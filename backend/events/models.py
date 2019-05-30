@@ -11,7 +11,7 @@ class UserInfo(models.Model):
 class ReminderDetails(models.Model):
     '''doc string for reminder'''
     id = models.AutoField(primary_key=True)
-    reminder_name = models.CharField(max_length=50, null=False)
+    title = models.CharField(max_length=50, null=False)
     description = models.CharField(max_length=800)
     date_time = models.DateTimeField(default=datetime.now, null=False)
     

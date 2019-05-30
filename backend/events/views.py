@@ -1,7 +1,10 @@
 from django.http import HttpResponse
 from events.models import UserInfo, ReminderDetails, Notes, CreatedNotes, CreatedReminders
 from django.db.models.query import QuerySet
-import datetime, pytz, json
+import datetime
+import pytz
+import json
+
 
 def login_user(request):
     if request.method == "POST":
@@ -83,9 +86,9 @@ def add_reminder(request):
 
         date_format = '%Y-%m-%d %H:%M:%S'
 
-        unaware_start_date = datetime.datetime.strptime(
+        unaware_date = datetime.datetime.strptime(
             event_date, date_format)
-        request_data['date_time'] = pytz.utc.localize(unaware_start_date)
+        request_data['date_time'] = pytz.utc.localize(unaware_date)
 
         try:
             reminder = ReminderDetails()
@@ -112,12 +115,13 @@ def add_reminder(request):
         return HttpResponse(status='404')
 
 
-def get_dashboard_details(request, user="" ):
+def get_dashboard_details(request):
     if request.method == "GET":
-        print(request.GET['zzz'])
-        print("user", user)
-        return HttpResponse(status='200')
-
+        try:
+            user = dict(request.GET)['user'][0]
+        except Exception as e:
+            print(e.args[0])
+            return HttpResponse("username is not present", status='404')
         reminders = get_user_created_reminders(user)
         notes = get_user_created_notes(user)
         response = dict()
@@ -128,25 +132,18 @@ def get_dashboard_details(request, user="" ):
         return HttpResponse(status='404')
 
 
-def get_user_id(user_name):
-    try:
-        return UserInfo.objects.filter(user_name=user_name).values()[0]["id"]
-    except Exception:
-        return None
-
-
 def get_user_created_notes(user_name):
     try:
         user_created_notes_list = list()
-        user_id = get_user_id(user_name)
+        user_id = user_name
         notes_list = CreatedNotes.objects.filter(user_name_id=user_id).values()
         if not isinstance(notes_list, QuerySet):
             notes_list = [notes_list]
 
         for note in notes_list:
             user_created_notes_list.append(
-                get_notes_details(note_id=note[0]))
-
+                get_notes_details(note_id=note['notes_id_id'],
+                get_values=True))
         return user_created_notes_list
     except UserInfo.DoesNotExist:
         return None
@@ -155,7 +152,7 @@ def get_user_created_notes(user_name):
 def get_user_created_reminders(user_name):
     try:
         user_created_reminders_list = list()
-        user_id = get_user_id(user_name)
+        user_id = user_name
         reminders_list = CreatedReminders.objects.filter(
             user_name_id=user_id).values()
         if not isinstance(reminders_list, QuerySet):
@@ -163,23 +160,42 @@ def get_user_created_reminders(user_name):
 
         for reminder in reminders_list:
             user_created_reminders_list.append(
-                get_reminder_details(reminder_id=reminder[0]))
+                get_reminder_details(reminder_id=reminder['reminder_id_id'],
+                get_values=True))
 
         return user_created_reminders_list
     except UserInfo.DoesNotExist:
         return None
 
 
-def get_notes_details(note_id):
+def get_notes_details(note_id, get_values=False):
     try:
-        return Notes.objects.get(id=note_id)
+        note_val =  Notes.objects.get(id=note_id)
+        if get_values:
+            note = dict()
+            note['title'] = note_val.title
+            note['description'] = note_val.description
+            return note
+        else:
+            return note_val
     except Notes.DoesNotExist:
         return None
 
 
-def get_reminder_details(reminder_id):
+def get_reminder_details(reminder_id, get_values=False ):
     try:
-        return ReminderDetails.objects.get(id=reminder_id)
+        reminder_val =  ReminderDetails.objects.get(id=reminder_id)
+
+        if get_values:
+            reminder = dict()
+            reminder['title'] = reminder_val.title
+            reminder['description'] = reminder_val.description
+            date_val  = str(reminder_val.date_time)
+            reminder['date'] = date_val.split(' ')[0]
+            reminder['time'] = date_val.split(' ')[1].split('+')[0]
+            return reminder
+        else:
+            return reminder_val
     except ReminderDetails.DoesNotExist:
         return None
 
