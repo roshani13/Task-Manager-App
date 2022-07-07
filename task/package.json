@@ -42,7 +42,7 @@
     "core-js": "^2.5.4",
     "firebase": "^5.10.1",
     "ionic2-calendar": "^0.5.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.29"
   },
